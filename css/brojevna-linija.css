@@ -1,0 +1,333 @@
+/* Brojevna linija styles */
+.brojevna-linija-container {
+    --primary-color: #4CAF50;
+    --secondary-color: #2196F3;
+    --background-color: #f0f2f5;
+    --card-color: #ffffff;
+    --text-color: #333333;
+    --success-color: #4CAF50;
+    --error-color: #f44336;
+    --number-line-color: #333333;
+    --marker-color: #e91e63;
+    --arrow-color: #2196F3;
+}
+
+.brojevna-linija-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Comic Neue', cursive;
+}
+
+.brojevna-linija-container header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.brojevna-linija-container h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.brojevna-linija-container .score {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+.brojevna-linija-container .task-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.brojevna-linija-container .task-card {
+    background-color: var(--card-color);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+.brojevna-linija-container .task {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.brojevna-linija-container .canvas-container {
+    width: 100%;
+    height: 200px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.brojevna-linija-container #numberLine {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.brojevna-linija-container .number-line-controls {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.brojevna-linija-container .control-button {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.brojevna-linija-container .control-button:hover {
+    transform: scale(1.1);
+    background-color: #1976D2;
+}
+
+.brojevna-linija-container .control-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.brojevna-linija-container .input-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
+
+.brojevna-linija-container #userInput {
+    padding: 0.8rem;
+    font-size: 1.2rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    width: 150px;
+    text-align: center;
+}
+
+.brojevna-linija-container #userInput:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+.brojevna-linija-container .button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.brojevna-linija-container .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.brojevna-linija-container .controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+}
+
+.brojevna-linija-container .feedback {
+    text-align: center;
+    padding: 1rem;
+    margin: 1rem auto;
+    border-radius: 8px;
+    max-width: 600px;
+    white-space: pre-line;
+}
+
+.brojevna-linija-container .feedback.correct {
+    background-color: #e8f5e9;
+    color: var(--success-color);
+}
+
+.brojevna-linija-container .feedback.incorrect {
+    background-color: #ffebee;
+    color: var(--error-color);
+}
+
+.brojevna-linija-container .feedback.hint {
+    background-color: #e3f2fd;
+    color: var(--secondary-color);
+}
+
+.brojevna-linija-container .hidden {
+    display: none;
+}
+
+/* Animacije */
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.pop {
+    animation: pop 0.3s ease;
+}
+
+/* Mobile-friendly styles */
+@media screen and (max-width: 768px) {
+    .brojevna-linija-container {
+        padding: 10px;
+    }
+
+    .brojevna-linija-container h1 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .brojevna-linija-container .task-card {
+        padding: 1rem;
+    }
+
+    .brojevna-linija-container .task {
+        font-size: 1.5rem;
+    }
+
+    .brojevna-linija-container .canvas-container {
+        height: 150px;
+        margin: 10px auto;
+        padding: 10px;
+    }
+
+    .brojevna-linija-container .control-button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .brojevna-linija-container .controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .brojevna-linija-container .button {
+        padding: 8px;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    .brojevna-linija-container .input-container {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .brojevna-linija-container .input-container input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    .brojevna-linija-container .input-container button {
+        width: 100%;
+    }
+}
+
+/* Extra small devices */
+@media screen and (max-width: 480px) {
+    .brojevna-linija-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .brojevna-linija-container .task {
+        font-size: 1.2rem;
+    }
+
+    .brojevna-linija-container .canvas-container {
+        height: 120px;
+    }
+
+    .brojevna-linija-container .control-button {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    body { 
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        margin: 0;
+    }
+
+    .brojevna-linija-container {
+        padding: 0;
+    }
+
+    .score,
+    .controls,
+    .input-container,
+    .canvas-container,
+    .task-container,
+    #feedback,
+    #masthead,
+    #colophon,
+    .site-header,
+    .site-footer {
+        display: none !important;
+    }
+
+    #printSection {
+        display: block !important;
+    }
+
+    .print-task { 
+        font-size: 16pt; 
+        margin: 30px 0;
+        page-break-inside: avoid;
+        clear: both;
+    }
+
+    .number-line {
+        width: 100%;
+        height: 100px;
+        margin: 10px 0;
+        display: block;
+    }
+
+    h2 { 
+        font-size: 20pt; 
+        text-align: center;
+        margin-bottom: 30px;
+    }
+}
+
+/* Hide print section during normal view */
+#printSection {
+    display: none;
+}

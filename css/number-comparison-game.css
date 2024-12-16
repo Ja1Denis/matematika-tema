@@ -1,0 +1,185 @@
+:root {
+    --primary-color: #3b82f6;
+    --primary-hover: #2563eb;
+    --background-start: #f3f4f6;
+    --background-end: #e5e7eb;
+    --card-background: white;
+    --text-color: #1f2937;
+    --error-color: #dc2626;
+    --success-color: #16a34a;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.game-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: linear-gradient(to bottom, var(--background-start), var(--background-end));
+}
+
+.game-card {
+    background: var(--card-background);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    max-width: 28rem;
+}
+
+.card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--background-end);
+}
+
+.card-title {
+    margin: 0;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.score-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.badge {
+    background: var(--background-start);
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+}
+
+.numbers-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.number {
+    background: rgba(59, 130, 246, 0.1);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.question-mark {
+    color: #6b7280;
+    font-size: 2rem;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.game-button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.25rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.game-button:hover {
+    background: var(--primary-hover);
+}
+
+.game-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.feedback {
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin: 1rem 0;
+    min-height: 1.75rem;
+}
+
+.feedback.success {
+    color: var(--success-color);
+}
+
+.feedback.error {
+    color: var(--error-color);
+}
+
+.hidden {
+    display: none;
+}
+
+.reset-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.reset-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--background-end);
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.reset-button:hover {
+    background: var(--background-start);
+}
+
+.refresh-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Stilovi za gumb za povratak */
+.back-button-container {
+    padding: 1rem;
+    max-width: 28rem;
+    margin: 0 auto;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s;
+}
+
+.back-button:hover {
+    background: var(--primary-hover);
+}
+
+.back-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}

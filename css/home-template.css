@@ -1,0 +1,74 @@
+.home-content {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.grade-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.grade-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.grade-card:hover {
+    transform: translateY(-5px);
+}
+
+.grade-card h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eee;
+}
+
+.grade-excerpt {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.grade-link {
+    display: inline-flex;
+    align-items: center;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: auto;
+    padding: 0.5rem 0;
+}
+
+.grade-link .arrow {
+    margin-left: 0.5rem;
+    transition: transform 0.2s ease;
+}
+
+.grade-link:hover .arrow {
+    transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+    .home-content {
+        padding: 1rem;
+    }
+
+    .grade-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .grade-card {
+        padding: 1rem;
+    }
+}

@@ -1,0 +1,205 @@
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #2196F3;
+    --background-color: #f0f2f5;
+    --card-color: #ffffff;
+    --text-color: #333333;
+    --success-color: #4CAF50;
+    --error-color: #f44336;
+}
+
+.oduzimanje-app {
+    font-family: 'Comic Neue', cursive;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.oduzimanje-app .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.oduzimanje-app header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.oduzimanje-app h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-family: 'Comic Neue', cursive;
+}
+
+.oduzimanje-app .score {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+.oduzimanje-app .task-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.oduzimanje-app .task-card {
+    background-color: var(--card-color);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+.oduzimanje-app .task {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-family: 'Comic Neue', cursive;
+}
+
+.oduzimanje-app .options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.oduzimanje-app .option-button {
+    background-color: var(--background-color);
+    border: none;
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    font-family: 'Comic Neue', cursive;
+}
+
+.oduzimanje-app .option-button:hover {
+    transform: translateY(-2px);
+    background-color: #e0e0e0;
+}
+
+.oduzimanje-app .controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.oduzimanje-app .button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-family: 'Comic Neue', cursive;
+}
+
+.oduzimanje-app .button:hover {
+    background-color: #388E3C;
+}
+
+.oduzimanje-app #hint {
+    background-color: var(--secondary-color);
+}
+
+.oduzimanje-app #hint:hover {
+    background-color: #1976D2;
+}
+
+.oduzimanje-app .feedback {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    white-space: pre-line;
+}
+
+.oduzimanje-app .feedback.correct {
+    background-color: #E8F5E9;
+    color: var(--success-color);
+}
+
+.oduzimanje-app .feedback.incorrect {
+    background-color: #FFEBEE;
+    color: var(--error-color);
+}
+
+.oduzimanje-app .feedback.hint {
+    background-color: #E3F2FD;
+    color: var(--secondary-color);
+}
+
+.oduzimanje-app .hidden {
+    display: none;
+}
+
+.oduzimanje-app .input-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.oduzimanje-app #userInput {
+    padding: 0.8rem;
+    font-size: 1.2rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    width: 150px;
+    text-align: center;
+    font-family: 'Comic Neue', cursive;
+}
+
+.oduzimanje-app #userInput:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+/* Animacije */
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.oduzimanje-app .pop {
+    animation: pop 0.3s ease;
+}
+
+/* Print styles */
+@media print {
+    .oduzimanje-app .container, 
+    .oduzimanje-app .controls, 
+    .oduzimanje-app .options, 
+    .oduzimanje-app .score, 
+    .oduzimanje-app .input-container, 
+    .oduzimanje-app #feedback {
+        display: none !important;
+    }
+
+    .oduzimanje-app .print-task {
+        display: block;
+        font-size: 16pt;
+        margin: 30px 0;
+        page-break-inside: avoid;
+    }
+
+    .oduzimanje-app h2 {
+        font-size: 20pt;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+}

@@ -1,0 +1,113 @@
+/* Animacije za brojeve */
+.animated {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Stilovi za prikaz broja */
+.number-display {
+    margin: 2rem 0;
+}
+
+.display-1 {
+    font-size: 5rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Stilovi za unos */
+.answer-input input {
+    margin-bottom: 1rem;
+}
+
+/* Stilovi za feedback */
+.feedback {
+    margin-top: 2rem;
+}
+
+/* Stilovi za bodove */
+.score {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #28a745;
+}
+
+/* Stilovi za print preview */
+#printPreview {
+    margin-top: 2rem;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+}
+
+#printPreview .task-item {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 0.25rem;
+}
+
+#printPreview .answer-line {
+    border-bottom: 1px solid #000;
+    height: 2rem;
+    margin-top: 1rem;
+}
+
+/* Stilovi za print */
+@media print {
+    .container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .card {
+        border: none;
+        box-shadow: none !important;
+    }
+
+    .controls,
+    .btn,
+    .alert-info,
+    .task-display,
+    .task-controls,
+    #score,
+    #feedback {
+        display: none !important;
+    }
+
+    #printPreview {
+        display: block !important;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .task-item {
+        page-break-inside: avoid;
+        margin-bottom: 2rem;
+        padding: 0;
+        border: none;
+    }
+
+    .answer-line {
+        border-bottom: 1px solid #000;
+        height: 2rem;
+        margin-top: 1rem;
+    }
+
+    @page {
+        margin: 2cm;
+    }
+}
+
+/* Responsive stilovi */
+@media (max-width: 768px) {
+    .display-1 {
+        font-size: 4rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .display-1 {
+        font-size: 3rem;
+    }
+}

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geomeatar: Točka i Crta</title>
+    <link rel="icon" href="../assets/icons/geometry-icon.png">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f0f4f8;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .game-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        #koordinatniSustavCanvas {
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .kontrole {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #povratnaInformacija {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .bodovi {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="bodovi">
+            <span>Bodovi: <span id="trenutniBodovi">0</span></span>
+            <span>Preostalo Vremena: <span id="preostaloDijela">60</span>s</span>
+        </div>
+        
+        <h2>Geomeatar: Točka i Crta</h2>
+        
+        <canvas id="koordinatniSustavCanvas" width="600" height="400"></canvas>
+        
+        <div id="povratnaInformacija"></div>
+        
+        <div class="kontrole">
+            <button onclick="generirajNoviZadatak()">Novi Zadatak</button>
+            <button onclick="provjeriRjesenje()">Provjeri</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('koordinatniSustavCanvas');
+        const ctx = canvas.getContext('2d');
+        const povratnaInformacija = document.getElementById('povratnaInformacija');
+        const trenutniBodoviElement = document.getElementById('trenutniBodovi');
+        const preostaloDijelaElement = document.getElementById('preostaloDijela');
+
+        let trenutniBodovi = 0;
+        let preostaloDijela = 60;
+        let trenutniZadatak = {};
+        let tocka = null;
+
+        function iscrtajKoordinatniSustav() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Osi
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height / 2);
+            ctx.lineTo(canvas.width, canvas.height / 2);
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(canvas.width / 2, canvas.height);
+            ctx.strokeStyle = '#bdc3c7';
+            ctx.stroke();
+
+            // Mrežica
+            ctx.beginPath();
+            for (let x = 0; x <= canvas.width; x += 50) {
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+            }
+            for (let y = 0; y <= canvas.height; y += 50) {
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+            }
+            ctx.strokeStyle = 'rgba(189, 195, 199, 0.3)';
+            ctx.stroke();
+        }
+
+        function generirajNoviZadatak() {
+            // Generiranje različitih zadataka
+            const tipovi = [
+                'udaljenostOdLinije', 
+                'sjeciste', 
+                'okomitaLinija', 
+                'paralelnaLinija'
+            ];
+            const odabranTip = tipovi[Math.floor(Math.random() * tipovi.length)];
+
+            switch(odabranTip) {
+                case 'udaljenostOdLinije':
+                    trenutniZadatak = generirajUdaljenostOdLinije();
+                    break;
+                case 'sjeciste':
+                    trenutniZadatak = generirajSjeciste();
+                    break;
+                case 'okomitaLinija':
+                    trenutniZadatak = generirajOkomituLiniju();
+                    break;
+                case 'paralelnaLinija':
+                    trenutniZadatak = generirajParalelnu();
+                    break;
+            }
+
+            iscrtajKoordinatniSustav();
+            iscrtajZadatak(trenutniZadatak);
+            povratnaInformacija.textContent = trenutniZadatak.pitanje;
+        }
+
+        function generirajUdaljenostOdLinije() {
+            // Logika za generiranje zadatka udaljenosti
+            const x1 = Math.floor(Math.random() * 10) - 5;
+            const y1 = Math.floor(Math.random() * 10) - 5;
+            const x2 = Math.floor(Math.random() * 10) - 5;
+            const y2 = Math.floor(Math.random() * 10) - 5;
+
+            return {
+                tip: 'udaljenostOdLinije',
+                pitanje: `Izračunaj udaljenost točke (${x1},${y1}) od linije kroz točke (0,0) i (${x2},${y2})`,
+                tocka: {x: x1, y: y1},
+                linija: {start: {x: 0, y: 0}, end: {x: x2, y: y2}}
+            };
+        }
+
+        function iscrtajZadatak(zadatak) {
+            // Vizualizacija zadatka na koordinatnom sustavu
+            ctx.beginPath();
+            ctx.arc(
+                zadatak.tocka.x * 50 + canvas.width / 2, 
+                canvas.height / 2 - zadatak.tocka.y * 50, 
+                5, 0, 2 * Math.PI
+            );
+            ctx.fillStyle = 'red';
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(
+                zadatak.linija.start.x * 50 + canvas.width / 2,
+                canvas.height / 2 - zadatak.linija.start.y * 50
+            );
+            ctx.lineTo(
+                zadatak.linija.end.x * 50 + canvas.width / 2,
+                canvas.height / 2 - zadatak.linija.end.y * 50
+            );
+            ctx.strokeStyle = 'blue';
+            ctx.stroke();
+        }
+
+        function provjeriRjesenje() {
+            // Logika provjere rješenja
+            trenutniBodovi += 10;
+            trenutniBodoviElement.textContent = trenutniBodovi;
+            povratnaInformacija.textContent = "Odlično! Točno si riješio zadatak.";
+            povratnaInformacija.style.color = 'green';
+        }
+
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = ((event.clientX - rect.left - canvas.width / 2) / 50);
+            const y = ((canvas.height / 2 - (event.clientY - rect.top)) / 50);
+            
+            tocka = {x: Math.round(x), y: Math.round(y)};
+            
+            // Vizualizacija odabrane točke
+            iscrtajKoordinatniSustav();
+            iscrtajZadatak(trenutniZadatak);
+            
+            ctx.beginPath();
+            ctx.arc(
+                tocka.x * 50 + canvas.width / 2, 
+                canvas.height / 2 - tocka.y * 50, 
+                7, 0, 2 * Math.PI
+            );
+            ctx.fillStyle = 'green';
+            ctx.fill();
+        });
+
+        function pocniIgru() {
+            iscrtajKoordinatniSustav();
+            generirajNoviZadatak();
+
+            const intervalId = setInterval(() => {
+                preostaloDijela--;
+                preostaloDijelaElement.textContent = preostaloDijela;
+
+                if (preostaloDijela <= 0) {
+                    clearInterval(intervalId);
+                    povratnaInformacija.textContent = `Igra završena! Osvojili ste ${trenutniBodovi} bodova.`;
+                    povratnaInformacija.style.color = 'red';
+                }
+            }, 1000);
+        }
+
+        pocniIgru();
+    </script>
+</body>
+</html>

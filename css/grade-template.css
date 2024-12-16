@@ -1,0 +1,89 @@
+/* Grade Template Styles */
+.grade-content {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.grade-content h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.grade-description {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Topics Grid */
+.topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+/* Topic Card */
+.topic-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.topic-card:hover {
+    transform: translateY(-5px);
+}
+
+.topic-card h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eee;
+}
+
+.topic-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.topic-card li {
+    margin: 0.5rem 0;
+}
+
+.topic-card a {
+    display: block;
+    color: #2c3e50;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+}
+
+.topic-card a:hover {
+    background: #f8f9fa;
+    padding-left: 1rem;
+    color: #3498db;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .grade-content {
+        padding: 1rem;
+    }
+
+    .topics-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .topic-card {
+        padding: 1rem;
+    }
+}

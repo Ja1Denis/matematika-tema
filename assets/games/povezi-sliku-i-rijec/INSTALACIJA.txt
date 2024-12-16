@@ -1,0 +1,114 @@
+ZAPISNIK INSTALACIJE I PRILAGODBE IGRE "POVEŽI SLIKU I RIJEČ". 
+Ovo koristiti samo kao referenca pri implementaciji igre u drugim aplikacijama.
+=======================================================
+
+1. STRUKTURA DIREKTORIJA
+-----------------------
+Potrebno kreirati sljedeće direktorije u temi:
+/assets/
+    ├── css/
+    ├── js/
+    ├── sounds/
+    └── images/
+        └── geometrijski-likovi/
+
+2. POTREBNE DATOTEKE
+-------------------
+CSS:
+- povezi-sliku-i-rijec.css
+
+JavaScript:
+- povezi-sliku-i-rijec.js
+
+Zvukovi (.wav format):
+- correct.wav
+- wrong.wav
+- levelup.wav
+
+Slike (SVG format):
+- kvadrat.svg
+- trokut.svg
+- krug.svg
+(i ostali geometrijski likovi prema potrebi)
+
+3. WORDPRESS INTEGRACIJA
+-----------------------
+U functions.php dodati:
+- Enqueue skripti i stilova
+- AJAX handlere
+- Custom post type za rezultate (ako je potrebno)
+
+4. TEMPLATE
+----------
+Kreirati page template: template-povezivanje.php
+Dodati:
+- wp_enqueue_style i wp_enqueue_script pozive
+- wp_localize_script za JavaScript podatke
+- Osnovnu HTML strukturu igre
+
+5. ČESTE GREŠKE I RJEŠENJA
+-------------------------
+a) Zvukovi ne rade:
+   - Provjeriti format (.wav umjesto .mp3)
+   - Provjeriti putanje u JavaScript kodu
+   - Dodati error handling za reprodukciju
+
+b) Slike se ne prikazuju:
+   - Provjeriti SVG format
+   - Provjeriti putanje
+   - Osigurati pravilno učitavanje kroz WordPress
+
+c) Responsive dizajn:
+   - Dodati media queries za različite veličine ekrana
+   - Prilagoditi grid layout
+   - Osigurati čitljivost teksta
+
+6. SIGURNOST
+------------
+- Dodati nonce provjeru za AJAX pozive
+- Sanitizirati inpute
+- Escapati outpute
+- Provjeriti korisničke privilegije
+
+7. PERFORMANCE
+-------------
+- Optimizirati slike
+- Minificirati CSS i JavaScript
+- Implementirati predmemoriranje rezultata
+- Predučitati zvukove i slike
+
+8. LOKALIZACIJA
+--------------
+- Pripremiti sve tekstove za prijevod
+- Koristiti WordPress funkcije za prijevod
+- Dodati jezične datoteke ako je potrebno
+
+9. TESTIRANJE
+------------
+Provjeriti:
+- Zvukove na svim browserima
+- Responsive dizajn
+- AJAX funkcionalnost
+- Spremanje rezultata
+- Kompatibilnost s različitim WordPress verzijama
+
+10. ODRŽAVANJE
+-------------
+- Redovito ažurirati kod prema WordPress standardima
+- Pratiti performance
+- Backup podataka
+- Logiranje grešaka
+
+NAPOMENE:
+---------
+- Prilagoditi težinu igre prema uzrastu
+- Dodati upute za igranje
+- Implementirati sustav bodovanja
+- Dodati vizualne efekte za bolji UX
+- Osigurati pristupačnost (accessibility)
+
+KONTAKTI:
+---------
+Za tehničku podršku:
+Email: [email]
+GitHub: [github]

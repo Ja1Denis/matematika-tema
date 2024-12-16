@@ -1,0 +1,52 @@
+/* Grade Content Styles */
+.grade-content {
+    padding: 6rem 5% 4rem;
+}
+
+.grade-content h1 {
+    text-align: center;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+}
+
+.topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.topic-card {
+    background: var(--text-light);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease;
+}
+
+.topic-card:hover {
+    transform: translateY(-5px);
+}
+
+.topic-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.topic-card ul {
+    list-style: none;
+}
+
+.topic-card ul li {
+    margin-bottom: 0.5rem;
+}
+
+.topic-card ul li a {
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.topic-card ul li a:hover {
+    color: var(--primary-color);
+}

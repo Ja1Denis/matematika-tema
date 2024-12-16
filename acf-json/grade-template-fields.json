@@ -1,0 +1,70 @@
+{
+    "key": "group_matematika_grade_template",
+    "title": "Grade Template Fields",
+    "fields": [
+        {
+            "key": "field_topics",
+            "label": "Topics",
+            "name": "topics",
+            "type": "repeater",
+            "instructions": "Add topics for this grade",
+            "required": 0,
+            "conditional_logic": 0,
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_topic_title",
+                    "label": "Topic Title",
+                    "name": "topic_title",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1
+                },
+                {
+                    "key": "field_topic_items",
+                    "label": "Topic Items",
+                    "name": "topic_items",
+                    "type": "repeater",
+                    "instructions": "",
+                    "required": 0,
+                    "layout": "table",
+                    "sub_fields": [
+                        {
+                            "key": "field_item_title",
+                            "label": "Item Title",
+                            "name": "item_title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 1
+                        },
+                        {
+                            "key": "field_item_link",
+                            "label": "Item Link",
+                            "name": "item_link",
+                            "type": "url",
+                            "instructions": "",
+                            "required": 1
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-templates/template-grade.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for grade-specific pages"
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prepoznavanje Skupova - Gamificirana Aplikacija</title>
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .app-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .task-selector {
+            margin-bottom: 20px;
+        }
+        .task-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .task-button:hover {
+            background-color: #0056b3;
+        }
+        .print-tasks {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .print-tasks:hover {
+            background-color: #218838;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .task-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <h1>Prepoznavanje Skupova</h1>
+    <div class="task-selector">
+        <h2>Odaberi težinu zadatka</h2>
+        <button class="task-button" onclick="selectTask('easy')">Lakši</button>
+        <button class="task-button" onclick="selectTask('medium')">Srednji</button>
+        <button class="task-button" onclick="selectTask('hard')">Teži</button>
+    </div>
+    <button class="print-tasks" onclick="printTasks()">Printaj Zadatke</button>
+    <div id="taskList" style="display:none">
+        <!-- Zadaci će biti generirani ovdje -->
+    </div>
+</div>
+<div class="footer">
+    <small>Napravljeno uz ljubav i humor</small>
+</div>
+
+<script>
+    function selectTask(taskLevel) {
+        console.log("Odabrana težina zadatka:", taskLevel);
+        generateTasks(taskLevel);
+    }
+
+    function generateTasks(taskLevel) {
+        const taskList = document.getElementById('taskList');
+        taskList.innerHTML = ''; // Clear existing tasks
+
+        let range;
+        switch (taskLevel) {
+            case 'easy':
+                range = [1, 30];
+                break;
+            case 'medium':
+                range = [1, 60];
+                break;
+            case 'hard':
+                range = [1, 100];
+                break;
+            default:
+                range = [1, 30];
+        }
+
+        for (let i = 0; i < 10; i++) {
+            const number = Math.floor(Math.random() * (range[1] - range[0] + 1)) + range[0];
+            const taskItem = document.createElement('div');
+            taskItem.textContent = `Zadatak ${i + 1}: ${number}`;
+            taskItem.className = 'task-item';
+            taskList.appendChild(taskItem);
+        }
+
+        taskList.style.display = 'block';
+    }
+
+    function printTasks() {
+        console.log("Printanje zadataka...");
+        var taskList = document.getElementById('taskList');
+        taskList.style.display = 'block';
+        setTimeout(() => {
+            window.print();
+            taskList.style.display = 'none';
+        }, 1000); // Kratka odgoda kako bi sadržaj bio vidljiv prije printanja
+    }
+</script>
+</body>
+</html>

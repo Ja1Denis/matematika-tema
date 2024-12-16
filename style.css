@@ -1,0 +1,374 @@
+/*
+Theme Name: MatematikaPRO
+Theme URI: http://matematika-pro.com
+Author: Your Name
+Author URI: http://yourwebsite.com
+Description: A custom WordPress theme for the MatematikaPRO mathematics learning platform
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: matematika-tema
+*/
+
+/* Migrate existing styles from project/css/style.css */
+
+@import url('css/blog.css');
+
+/* Mobile Navigation Styles */
+@media screen and (max-width: 768px) {
+    .main-navigation {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+
+    .main-navigation.active {
+        display: block;
+    }
+
+    .main-navigation ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .main-navigation li {
+        border-bottom: 1px solid #eee;
+    }
+
+    .main-navigation a {
+        display: block;
+        padding: 15px 20px;
+        color: #333;
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .site-header {
+        position: relative;
+        z-index: 1001;
+        background: white;
+    }
+}
+
+/* Stilovi za pretragu */
+.search-form-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 1000;
+}
+
+.search-form-container.active {
+    display: block;
+    animation: slideDown 0.3s ease-out;
+}
+
+.search-form {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-field {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 30px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.search-field:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+.search-submit {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.search-submit:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+.search-submit svg {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+}
+
+/* Animacija za pretragu */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stilovi za search toggle dugme u headeru */
+.search-toggle {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.search-toggle:hover {
+    color: #007bff;
+}
+
+/* Responsive stilovi za pretragu */
+@media screen and (max-width: 768px) {
+    .search-form-container {
+        padding: 15px;
+    }
+
+    .search-field {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+
+    .search-submit {
+        padding: 10px;
+    }
+}
+
+/* Stilovi za stranicu s rezultatima pretrage */
+.search-results-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.search-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.search-header .page-title {
+    font-size: 24px;
+    color: #333;
+}
+
+.search-header .page-title span {
+    color: #007bff;
+}
+
+.search-result-item {
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.search-result-item:hover {
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.search-result-item .entry-title {
+    margin: 0 0 15px 0;
+    font-size: 20px;
+}
+
+.search-result-item .entry-title a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.search-result-item .entry-title a:hover {
+    color: #007bff;
+}
+
+.search-result-item .entry-summary {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.search-result-item .read-more {
+    display: inline-block;
+    padding: 8px 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.search-result-item .read-more:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+.no-results {
+    text-align: center;
+    padding: 40px 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.no-results h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.no-results p {
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Stilovi za paginaciju */
+.navigation.pagination {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.nav-links {
+    display: inline-flex;
+    gap: 10px;
+}
+
+.page-numbers {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.page-numbers.current {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.page-numbers:hover:not(.current) {
+    background: #f8f9fa;
+    border-color: #007bff;
+}
+
+@media screen and (max-width: 768px) {
+    .search-results-container {
+        padding: 0 15px;
+        margin: 20px auto;
+    }
+
+    .search-result-item {
+        padding: 15px;
+    }
+
+    .search-result-item .entry-title {
+        font-size: 18px;
+    }
+}
+
+/* Stilovi za autocomplete */
+.ui-autocomplete {
+    position: absolute;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 1px solid #eee;
+    padding: 5px 0;
+    z-index: 9999;
+}
+
+.ui-autocomplete .ui-menu-item {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.autocomplete-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.autocomplete-item:hover {
+    background-color: #f8f9fa;
+}
+
+.autocomplete-title {
+    color: #333;
+    font-weight: 500;
+    flex: 1;
+    margin-right: 10px;
+}
+
+.autocomplete-type {
+    color: #666;
+    font-size: 0.85em;
+    padding: 2px 8px;
+    background: #f0f0f0;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+/* Stilovi za loading indikator */
+.ui-autocomplete-loading {
+    background: white url('data:image/gif;base64,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') right center no-repeat;
+}
+
+/* Responzivni stilovi za autocomplete */
+@media screen and (max-width: 768px) {
+    .ui-autocomplete {
+        max-width: calc(100% - 30px);
+        font-size: 14px;
+    }
+    
+    .autocomplete-item {
+        padding: 8px 12px;
+    }
+}

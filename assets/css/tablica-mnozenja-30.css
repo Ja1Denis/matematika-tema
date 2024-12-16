@@ -1,0 +1,356 @@
+/* Tablica množenja do 30 - Stilovi */
+.tablica-mnozenja-30 {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.tablica-mnozenja-30 header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.tablica-mnozenja-30 h1 {
+    color: #1a73e8;
+    margin-bottom: 20px;
+}
+
+.tablica-mnozenja-30 .controls {
+    margin-bottom: 20px;
+}
+
+.tablica-mnozenja-30 button {
+    padding: 8px 15px;
+    margin: 0 5px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.tablica-mnozenja-30 button:hover {
+    background-color: #45a049;
+}
+
+.tablica-mnozenja-30 button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.tablica-mnozenja-30 .test-info {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+.tablica-mnozenja-30 main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.tablica-mnozenja-30 .tablica-container,
+.tablica-mnozenja-30 .zadaci-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tablica-mnozenja-30 h2 {
+    color: #1a73e8;
+    margin-top: 0;
+}
+
+.tablica-mnozenja-30 table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tablica-mnozenja-30 td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tablica-mnozenja-30 td:hover {
+    background-color: #e8f0fe;
+}
+
+.tablica-mnozenja-30 td.highlight {
+    background-color: #e8f0fe !important;
+    position: relative;
+    z-index: 1;
+}
+
+.tablica-mnozenja-30 td.correct {
+    position: relative;
+}
+
+.tablica-mnozenja-30 td.correct::after {
+    content: '✓';
+    color: #4CAF50;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.tablica-mnozenja-30 .zadatak {
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.tablica-mnozenja-30 .zadatak input {
+    width: 60px;
+    padding: 5px;
+    margin: 0 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.tablica-mnozenja-30 .zadatak button {
+    margin-left: 10px;
+}
+
+.tablica-mnozenja-30 .correct {
+    background-color: rgba(76, 175, 80, 0.1);
+    border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.tablica-mnozenja-30 .incorrect {
+    background-color: rgba(244, 67, 54, 0.1);
+    border: 1px solid rgba(244, 67, 54, 0.2);
+}
+
+.tablica-mnozenja-30 .checkmark {
+    color: #4CAF50;
+    margin-left: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #e8f5e9;
+    position: absolute;
+    right: 10px;
+}
+
+@media print {
+    .tablica-mnozenja-30 {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .tablica-mnozenja-30 .controls, 
+    .tablica-mnozenja-30 .test-info {
+        display: none !important;
+    }
+    
+    .tablica-mnozenja-30 main {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .tablica-mnozenja-30 .tablica-container,
+    .tablica-mnozenja-30 .zadaci-container {
+        margin: 20px 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+    }
+    
+    .tablica-mnozenja-30 table {
+        page-break-inside: avoid;
+    }
+    
+    .tablica-mnozenja-30 .zadatak {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+    .tablica-mnozenja-30 button {
+        display: none !important;
+    }
+    
+    .tablica-mnozenja-30 input {
+        border: 1px solid #000 !important;
+        background: transparent !important;
+    }
+    
+    @page {
+        margin: 1cm;
+    }
+}
+
+@media (max-width: 768px) {
+    .tablica-mnozenja-30 main {
+        grid-template-columns: 1fr;
+    }
+    
+    .tablica-mnozenja-30 .controls button {
+        margin: 5px;
+    }
+}
+
+/* Modal stilovi */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.close {
+    color: #888;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.print-area {
+    margin: 20px 0;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.print-tablica, .print-zadaci {
+    margin-bottom: 30px;
+}
+
+.print-controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#printNow {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#printNow:hover {
+    background-color: #45a049;
+}
+
+/* Print-specific stilovi */
+@media print {
+    /* Sakrij sve osim print područja */
+    body * {
+        visibility: hidden !important;
+    }
+    
+    /* Prikaži samo modal content */
+    #printModal {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: none !important;
+    }
+    
+    .modal-content {
+        box-shadow: none !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+    
+    /* Prikaži samo print područje */
+    .print-area, 
+    .print-area * {
+        visibility: visible !important;
+    }
+    
+    /* Sakrij nepotrebne elemente */
+    .modal-content > h2,
+    .print-controls,
+    .close {
+        display: none !important;
+    }
+    
+    /* Stilovi za tablicu */
+    .print-tablica table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px auto;
+        page-break-inside: avoid;
+    }
+    
+    .print-tablica td,
+    .print-tablica th {
+        border: 1px solid #000;
+        padding: 8px;
+        text-align: center;
+    }
+    
+    /* Stilovi za zadatke */
+    .print-zadaci {
+        margin-top: 30px;
+        column-count: 2;
+        column-gap: 40px;
+    }
+    
+    .print-zadaci .zadatak {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 15px;
+    }
+    
+    /* Postavi margine za print */
+    @page {
+        margin: 1.5cm;
+        size: A4;
+    }
+}

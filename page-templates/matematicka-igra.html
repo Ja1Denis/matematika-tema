@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matematička igra - Brojevi do 100</title>
+    <link rel="stylesheet" href="../css/matematicka-igra.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-view" id="gameView">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title">Matematička igra - Brojevi do 100</h1>
+                </div>
+                <div class="card-content">
+                    <div class="difficulty-selector">
+                        <label class="label">Odaberi težinu:</label>
+                        <select id="difficultySelect" class="select">
+                            <option value="easy">Lagano (do 30)</option>
+                            <option value="medium">Srednje (do 60)</option>
+                            <option value="hard">Teško (do 100)</option>
+                        </select>
+                    </div>
+
+                    <div class="number-display">
+                        <span id="currentNumber" class="number">0</span>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="speakButton" class="button">
+                            🔊 Izgovori broj
+                        </button>
+                        <button id="newNumberButton" class="button">
+                            🔄 Novi broj
+                        </button>
+                    </div>
+
+                    <div class="score-display">
+                        <div class="stars" id="stars">
+                            <span class="star">☆</span>
+                            <span class="star">☆</span>
+                            <span class="star">☆</span>
+                            <span class="star">☆</span>
+                            <span class="star">☆</span>
+                        </div>
+                        <p class="score-text">Bodovi: <span id="scoreDisplay">0</span></p>
+                    </div>
+
+                    <div class="print-section">
+                        <button id="printButton" class="button">
+                            🖨️ Ispiši zadatke
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="print-view hidden" id="printView">
+            <button id="backButton" class="button back-button">
+                ← Natrag na igru
+            </button>
+            <div class="print-content">
+                <h2>Zadaci za vježbanje</h2>
+                <div class="print-grid" id="printGrid">
+                    <!-- Tasks will be generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/matematicka-igra.js"></script>
+</body>
+</html>

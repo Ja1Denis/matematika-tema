@@ -1,0 +1,402 @@
+/* Game container styles */
+.matematika-app {
+    --primary-color: #4CAF50;
+    --primary-dark: #45a049;
+    --secondary-color: #2196F3;
+    --secondary-dark: #1976D2;
+    --success-color: #4CAF50;
+    --error-color: #f44336;
+    --text-color: #333;
+    --light-gray: #f5f5f5;
+    --border-color: #e0e0e0;
+    padding: 2rem 1rem;
+}
+
+.game-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Header styles */
+.card-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.card-subtitle {
+    margin: 0.5rem 0 0;
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Content styles */
+.card-content {
+    padding: 2rem;
+}
+
+/* Controls section */
+.controls-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.difficulty-selector {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.select {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.select:hover {
+    border-color: var(--primary-color);
+}
+
+.select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+/* Button styles */
+.button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.primary-button {
+    background: var(--primary-color);
+    color: white;
+}
+
+.primary-button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.secondary-button {
+    background: var(--light-gray);
+    color: var(--text-color);
+}
+
+.secondary-button:hover {
+    background: var(--border-color);
+    transform: translateY(-2px);
+}
+
+.print-button {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.print-button:hover {
+    background: var(--secondary-dark);
+    transform: translateY(-2px);
+}
+
+/* Game view styles */
+.game-view {
+    background: var(--light-gray);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.exercise-instruction {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+/* Number set display */
+.number-set {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.number-item {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.number-item:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pattern-hint {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    margin-top: 1rem;
+}
+
+/* Answer section */
+.answer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.form-control {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Feedback section */
+.feedback-section {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.feedback-display {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    min-height: 1.5em;
+}
+
+.feedback-correct {
+    color: var(--success-color);
+}
+
+.feedback-incorrect {
+    color: var(--error-color);
+}
+
+/* Score display */
+.score-display {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.stars {
+    font-size: 2rem;
+    color: #FFD700;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.star {
+    transition: all 0.3s ease;
+}
+
+.star.filled {
+    transform: scale(1.2);
+}
+
+/* Checkmark animation */
+.checkmark-container {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    display: none;
+}
+
+.checkmark-container.show {
+    display: block;
+}
+
+.checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: var(--success-color);
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    stroke: var(--success-color);
+    stroke-width: 3;
+    fill: none;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Print styles */
+@media print {
+    .matematika-app {
+        padding: 0;
+    }
+
+    .game-container {
+        box-shadow: none;
+    }
+
+    .controls-section,
+    .game-view {
+        display: none !important;
+    }
+
+    .print-view {
+        display: block !important;
+    }
+
+    .print-exercises {
+        padding: 2rem;
+    }
+
+    .print-instruction {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+    }
+
+    .exercises-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .print-exercise {
+        padding: 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        page-break-inside: avoid;
+    }
+
+    .number-row {
+        font-size: 1.2rem;
+        margin: 1rem 0;
+    }
+
+    .answer-line {
+        margin-top: 1rem;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.5rem;
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .card-title {
+        font-size: 2rem;
+    }
+
+    .controls-section {
+        flex-direction: column;
+    }
+
+    .difficulty-selector {
+        width: 100%;
+    }
+
+    .select {
+        width: 100%;
+    }
+
+    .button-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .button {
+        width: 100%;
+    }
+
+    .number-set {
+        gap: 0.5rem;
+    }
+
+    .number-item {
+        padding: 0.75rem 1rem;
+        font-size: 1.2rem;
+        min-width: 50px;
+    }
+}
+
+/* Utility classes */
+.hidden {
+    display: none !important;
+}

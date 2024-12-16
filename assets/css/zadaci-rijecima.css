@@ -1,0 +1,197 @@
+/* Reset i osnovni stilovi */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 2rem 0;
+}
+
+.container {
+    background: white;
+    padding: 2rem;
+    width: 90%;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.task-container {
+    margin: 2rem 0;
+}
+
+.task-text {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+}
+
+input[type="number"] {
+    border: 2px solid #ddd;
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    width: 120px;
+    text-align: center;
+}
+
+.button {
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background: #71b7e6;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.button:hover {
+    background: #9b59b6;
+}
+
+#newTask {
+    background: #4CAF50;
+}
+
+#newTask:hover {
+    background: #45a049;
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.result {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    min-height: 30px;
+}
+
+.result.correct {
+    color: #4CAF50;
+}
+
+/* Footer stilovi */
+.site-footer {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.site-footer p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.site-footer a {
+    color: #71b7e6;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+    color: #9b59b6;
+}
+
+/* Print Preview */
+.print-preview {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.print-preview-content {
+    background: white;
+    width: 90%;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.print-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.print-preview-controls {
+    display: flex;
+    gap: 1rem;
+}
+
+.print-task-list {
+    list-style-position: inside;
+    padding: 1rem;
+}
+
+.print-task-list li {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+/* Print styles */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .print-preview, .print-preview * {
+        visibility: visible;
+    }
+    .print-preview {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white;
+    }
+    .print-preview-controls {
+        display: none;
+    }
+}
