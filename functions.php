@@ -1372,3 +1372,64 @@ function matematika_tema_optimize_loading() {
     echo '<link rel="dns-prefetch" href="//google-analytics.com">';
 }
 add_action('wp_head', 'matematika_tema_optimize_loading', 1);
+
+// Generiranje Sitemap XML-a
+function matematika_tema_generate_sitemap() {
+    $sitemap_content = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    $sitemap_content .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+    
+    // Dodaj homepage
+    $sitemap_content .= matematika_tema_get_sitemap_url(home_url('/'), '1.0', 'daily');
+    
+    // Dodaj stranice
+    $pages = get_pages();
+    foreach ($pages as $page) {
+        $sitemap_content .= matematika_tema_get_sitemap_url(get_permalink($page->ID), '0.8', 'weekly');
+    }
+    
+    // Dodaj postove
+    $posts = get_posts(array('posts_per_page' => -1));
+    foreach ($posts as $post) {
+        $sitemap_content .= matematika_tema_get_sitemap_url(get_permalink($post->ID), '0.6', 'monthly');
+    }
+    
+    // Dodaj custom post types
+    $custom_types = array('geometric_shapes_game');
+    foreach ($custom_types as $type) {
+        $custom_posts = get_posts(array('post_type' => $type, 'posts_per_page' => -1));
+        foreach ($custom_posts as $post) {
+            $sitemap_content .= matematika_tema_get_sitemap_url(get_permalink($post->ID), '0.6', 'weekly');
+        }
+    }
+    
+    $sitemap_content .= '</urlset>';
+    
+    // Spremi sitemap.xml
+    $sitemap_path = get_template_directory() . '/sitemap.xml';
+    file_put_contents($sitemap_path, $sitemap_content);
+}
+
+// Helper funkcija za generiranje URL unosa u sitemap
+function matematika_tema_get_sitemap_url($url, $priority, $changefreq) {
+    return "\t<url>\n" .
+           "\t\t<loc>" . esc_url($url) . "</loc>\n" .
+           "\t\t<lastmod>" . date('c') . "</lastmod>\n" .
+           "\t\t<changefreq>" . esc_html($changefreq) . "</changefreq>\n" .
+           "\t\t<priority>" . esc_html($priority) . "</priority>\n" .
+           "\t</url>\n";
+}
+
+// Generiraj sitemap kada se spremi post ili stranica
+function matematika_tema_update_sitemap($post_id) {
+    if (wp_is_post_revision($post_id)) {
+        return;
+    }
+    matematika_tema_generate_sitemap();
+}
+add_action('save_post', 'matematika_tema_update_sitemap');
+
+// Generiraj sitemap pri aktivaciji teme
+function matematika_tema_activate() {
+    matematika_tema_generate_sitemap();
+}
+add_action('after_switch_theme', 'matematika_tema_activate');

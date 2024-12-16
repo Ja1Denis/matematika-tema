@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /wp-content/uploads/
+Allow: /wp-content/themes/matematika-tema/assets/
+Allow: /wp-content/themes/matematika-tema/css/
+Allow: /wp-content/themes/matematika-tema/js/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/themes/matematika-tema/inc/
+Disallow: /wp-content/themes/matematika-tema/includes/
+Disallow: /readme.html
+Disallow: /refer/
+
+# Dozvoli pretraživačima da indeksiraju sitemap
+Sitemap: https://matematika.pro/sitemap.xml
