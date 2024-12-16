@@ -1319,3 +1319,56 @@ function register_game_score_post_type() {
     register_post_type('game_score', $args);
 }
 add_action('init', 'register_game_score_post_type');
+
+// SEO optimizacija
+function matematika_tema_add_seo_support() {
+    // Dodaj podršku za custom image sizes za društvene mreže
+    add_image_size('social-share', 1200, 630, true);
+    
+    // Dodaj podršku za schema.org markup
+    add_theme_support('html5', array(
+        'search-form',
+        'comment-form',
+        'comment-list',
+        'gallery',
+        'caption',
+        'script',
+        'style',
+    ));
+}
+add_action('after_setup_theme', 'matematika_tema_add_seo_support');
+
+// Optimizacija slika
+function matematika_tema_lazy_loading_images($content) {
+    return preg_replace('/<img(.*?)src=/i', '<img$1loading="lazy" src=', $content);
+}
+add_filter('the_content', 'matematika_tema_lazy_loading_images');
+
+// Dodaj Schema.org markup za edukativni sadržaj
+function matematika_tema_add_schema_markup() {
+    if (is_singular('page') || is_singular('post')) {
+        $schema = array(
+            '@context' => 'https://schema.org',
+            '@type' => 'EducationalOrganization',
+            'name' => get_bloginfo('name'),
+            'description' => get_bloginfo('description'),
+            'url' => get_permalink(),
+            'teaches' => 'Matematika',
+            'educationalLevel' => 'Osnovna škola'
+        );
+        
+        echo '<script type="application/ld+json">' . wp_json_encode($schema) . '</script>';
+    }
+}
+add_action('wp_footer', 'matematika_tema_add_schema_markup');
+
+// Optimizacija brzine učitavanja
+function matematika_tema_optimize_loading() {
+    // Preload važnih resursa
+    echo '<link rel="preload" href="' . get_stylesheet_uri() . '" as="style">';
+    
+    // DNS prefetch za vanjske resurse
+    echo '<link rel="dns-prefetch" href="//fonts.googleapis.com">';
+    echo '<link rel="dns-prefetch" href="//google-analytics.com">';
+}
+add_action('wp_head', 'matematika_tema_optimize_loading', 1);

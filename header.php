@@ -8,6 +8,24 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Basic SEO -->
+    <meta name="description" content="<?php echo esc_attr(get_bloginfo('description')); ?>">
+    <meta name="keywords" content="matematika, edukacija, škola, učenje, zadaci, geometrija, brojevi">
+    <link rel="canonical" href="<?php echo esc_url(get_permalink()); ?>">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="<?php wp_title('|', true, 'right'); ?>">
+    <meta property="og:description" content="<?php echo esc_attr(get_bloginfo('description')); ?>">
+    <meta property="og:url" content="<?php echo esc_url(get_permalink()); ?>">
+    <meta property="og:site_name" content="<?php echo esc_attr(get_bloginfo('name')); ?>">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php wp_title('|', true, 'right'); ?>">
+    <meta name="twitter:description" content="<?php echo esc_attr(get_bloginfo('description')); ?>">
+    
     <title><?php wp_title('|', true, 'right'); ?></title>
     <?php wp_head(); ?>
 </head>
