@@ -1346,21 +1346,255 @@ add_filter('the_content', 'matematika_tema_lazy_loading_images');
 
 // Dodaj Schema.org markup za edukativni sadržaj
 function matematika_tema_add_schema_markup() {
-    if (is_singular('page') || is_singular('post')) {
-        $schema = array(
-            '@context' => 'https://schema.org',
-            '@type' => 'EducationalOrganization',
-            'name' => get_bloginfo('name'),
-            'description' => get_bloginfo('description'),
-            'url' => get_permalink(),
-            'teaches' => 'Matematika',
-            'educationalLevel' => 'Osnovna škola'
-        );
-        
-        echo '<script type="application/ld+json">' . wp_json_encode($schema) . '</script>';
+    global $post;
+    
+    // Osnovni podaci o organizaciji
+    $organization_schema = array(
+        '@context' => 'https://schema.org',
+        '@type' => 'EducationalOrganization',
+        'name' => 'Matematika Pro',
+        'url' => home_url(),
+        'logo' => get_template_directory_uri() . '/assets/images/logo.png'
+    );
+    
+    // Breadcrumbs schema
+    $breadcrumbs_schema = matematika_tema_get_breadcrumbs_schema();
+    
+    // Specifični schema markup ovisno o tipu stranice
+    if (is_singular()) {
+        if (is_page_template('page-templates/template-grade.php')) {
+            $specific_schema = matematika_tema_get_grade_schema($post);
+        } elseif (is_page_template(array(
+            'page-templates/game-geometric-shapes.php',
+            'page-templates/matematicka-igra.php',
+            'page-templates/matematicki-zadaci.php'
+        ))) {
+            $specific_schema = matematika_tema_get_game_schema($post);
+        } else {
+            $specific_schema = matematika_tema_get_lesson_schema($post);
+        }
     }
+    
+    // Kombiniraj sve schema podatke
+    $schema_data = array($organization_schema, $breadcrumbs_schema);
+    if (isset($specific_schema)) {
+        $schema_data[] = $specific_schema;
+    }
+    
+    // Ispiši schema markup
+    echo '<script type="application/ld+json">' . wp_json_encode($schema_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>';
 }
 add_action('wp_footer', 'matematika_tema_add_schema_markup');
+
+// Generiranje Sitemap XML-a
+function matematika_tema_generate_sitemap() {
+    $sitemap_content = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    $sitemap_content .= '<?xml-stylesheet type="text/xsl" href="' . get_template_directory_uri() . '/sitemap.xsl"?>' . "\n";
+    $sitemap_content .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                               xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+                               xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                               http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">' . "\n";
+    
+    // Dodaj homepage
+    $sitemap_content .= matematika_tema_get_sitemap_url(home_url('/'), '1.0', 'daily');
+    
+    // Dodaj stranice razreda (prioritet)
+    $grade_pages = get_pages(array('meta_key' => '_wp_page_template', 'meta_value' => 'page-templates/template-grade.php'));
+    foreach ($grade_pages as $page) {
+        $sitemap_content .= matematika_tema_get_sitemap_url(get_permalink($page->ID), '0.9', 'weekly');
+    }
+    
+    // Dodaj stranice igara (visok prioritet)
+    $game_pages = get_pages(array(
+        'meta_key' => '_wp_page_template',
+        'meta_value' => array(
+            'page-templates/game-geometric-shapes.php',
+            'page-templates/matematicka-igra.php',
+            'page-templates/matematicki-zadaci.php'
+        ),
+        'meta_compare' => 'IN'
+    ));
+    foreach ($game_pages as $page) {
+        $sitemap_content .= matematika_tema_get_sitemap_url(get_permalink($page->ID), '0.8', 'weekly');
+    }
+    
+    // Dodaj ostale stranice
+    $regular_pages = get_pages(array(
+        'exclude' => wp_list_pluck($grade_pages + $game_pages, 'ID')
+    ));
+    foreach ($regular_pages as $page) {
+        $sitemap_content .= matematika_tema_get_sitemap_url(get_permalink($page->ID), '0.7', 'weekly');
+    }
+    
+    // Dodaj postove
+    $posts = get_posts(array('posts_per_page' => -1));
+    foreach ($posts as $post) {
+        // Dodaj i featured image ako postoji
+        $image_data = '';
+        if (has_post_thumbnail($post->ID)) {
+            $image_url = get_the_post_thumbnail_url($post->ID, 'full');
+            $image_data = "\t\t<image:image>\n" .
+                         "\t\t\t<image:loc>" . esc_url($image_url) . "</image:loc>\n" .
+                         "\t\t\t<image:title>" . esc_html(get_the_title($post->ID)) . "</image:title>\n" .
+                         "\t\t</image:image>\n";
+        }
+        $sitemap_content .= matematika_tema_get_sitemap_url(get_permalink($post->ID), '0.6', 'monthly', $image_data);
+    }
+    
+    // Dodaj custom post types
+    $custom_types = array('geometric_shapes_game');
+    foreach ($custom_types as $type) {
+        $custom_posts = get_posts(array('post_type' => $type, 'posts_per_page' => -1));
+        foreach ($custom_posts as $post) {
+            $sitemap_content .= matematika_tema_get_sitemap_url(get_permalink($post->ID), '0.6', 'weekly');
+        }
+    }
+    
+    // Dodaj kategorije i tagove
+    $taxonomies = array('category', 'post_tag');
+    foreach ($taxonomies as $tax) {
+        $terms = get_terms(array('taxonomy' => $tax, 'hide_empty' => true));
+        foreach ($terms as $term) {
+            $sitemap_content .= matematika_tema_get_sitemap_url(get_term_link($term), '0.5', 'weekly');
+        }
+    }
+    
+    $sitemap_content .= '</urlset>';
+    
+    // Spremi sitemap.xml
+    $sitemap_path = get_template_directory() . '/sitemap.xml';
+    file_put_contents($sitemap_path, $sitemap_content);
+    
+    // Generiraj i XSL datoteku za formatiranje
+    matematika_tema_generate_sitemap_xsl();
+}
+
+// Helper funkcija za generiranje URL unosa u sitemap
+function matematika_tema_get_sitemap_url($url, $priority, $changefreq, $additional_data = '') {
+    $modified_time = get_the_modified_time('c', get_post(url_to_postid($url)));
+    if (!$modified_time) {
+        $modified_time = date('c');
+    }
+    
+    return "\t<url>\n" .
+           "\t\t<loc>" . esc_url($url) . "</loc>\n" .
+           "\t\t<lastmod>" . $modified_time . "</lastmod>\n" .
+           "\t\t<changefreq>" . esc_html($changefreq) . "</changefreq>\n" .
+           "\t\t<priority>" . esc_html($priority) . "</priority>\n" .
+           $additional_data .
+           "\t</url>\n";
+}
+
+// Generiranje XSL datoteke za formatiranje sitemap-a
+function matematika_tema_generate_sitemap_xsl() {
+    $xsl_content = '<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="2.0" 
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:sitemap="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
+    <xsl:template match="/">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+            <head>
+                <title>XML Sitemap - Matematika Pro</title>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <style type="text/css">
+                    body {
+                        font-family: Arial, sans-serif;
+                        font-size: 13px;
+                        color: #545353;
+                    }
+                    table {
+                        border: none;
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                    #sitemap tr:nth-child(odd) td {
+                        background-color: #f8f8f8 !important;
+                    }
+                    #sitemap tbody tr:hover td {
+                        background-color: #fff;
+                    }
+                    #sitemap tbody tr:hover td, #sitemap tbody tr:hover td a {
+                        color: #000;
+                    }
+                    .expl {
+                        margin: 10px 3px;
+                        line-height: 1.3em;
+                    }
+                    .expl a {
+                        color: #da3114;
+                        font-weight: bold;
+                    }
+                </style>
+            </head>
+            <body>
+                <div id="content">
+                    <h1>XML Sitemap</h1>
+                    <p class="expl">
+                        Ovo je XML sitemap za Matematika Pro, automatski generiran za bolju vidljivost u tražilicama.
+                    </p>
+                    <table id="sitemap" cellpadding="3">
+                        <thead>
+                            <tr>
+                                <th width="75%">URL</th>
+                                <th width="5%">Prioritet</th>
+                                <th width="5%">Učestalost promjena</th>
+                                <th width="15%">Zadnja izmjena</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <xsl:for-each select="sitemap:urlset/sitemap:url">
+                                <tr>
+                                    <td>
+                                        <xsl:variable name="itemURL">
+                                            <xsl:value-of select="sitemap:loc"/>
+                                        </xsl:variable>
+                                        <a href="{$itemURL}">
+                                            <xsl:value-of select="sitemap:loc"/>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <xsl:value-of select="sitemap:priority"/>
+                                    </td>
+                                    <td>
+                                        <xsl:value-of select="sitemap:changefreq"/>
+                                    </td>
+                                    <td>
+                                        <xsl:value-of select="sitemap:lastmod"/>
+                                    </td>
+                                </tr>
+                            </xsl:for-each>
+                        </tbody>
+                    </table>
+                </div>
+            </body>
+        </html>
+    </xsl:template>
+</xsl:stylesheet>';
+
+    $xsl_path = get_template_directory() . '/sitemap.xsl';
+    file_put_contents($xsl_path, $xsl_content);
+}
+
+// Generiraj sitemap kada se spremi post ili stranica
+function matematika_tema_update_sitemap($post_id) {
+    if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+        return;
+    }
+    matematika_tema_generate_sitemap();
+}
+add_action('save_post', 'matematika_tema_update_sitemap');
+add_action('delete_post', 'matematika_tema_update_sitemap');
+add_action('create_term', 'matematika_tema_update_sitemap');
+add_action('edit_term', 'matematika_tema_update_sitemap');
+add_action('delete_term', 'matematika_tema_update_sitemap');
+
+// Generiraj sitemap pri aktivaciji teme
+function matematika_tema_activate() {
+    matematika_tema_generate_sitemap();
+}
+add_action('after_switch_theme', 'matematika_tema_activate');
 
 // Optimizacija brzine učitavanja
 function matematika_tema_optimize_loading() {
@@ -1373,63 +1607,58 @@ function matematika_tema_optimize_loading() {
 }
 add_action('wp_head', 'matematika_tema_optimize_loading', 1);
 
-// Generiranje Sitemap XML-a
-function matematika_tema_generate_sitemap() {
-    $sitemap_content = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-    $sitemap_content .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+// Lokalizacijske SEO značajke
+function matematika_tema_add_localization_meta() {
+    // Postavi hrvatski kao glavni jezik
+    echo '<meta property="og:locale" content="hr_HR">';
+    echo '<link rel="alternate" href="' . home_url() . '" hreflang="hr-HR">';
     
-    // Dodaj homepage
-    $sitemap_content .= matematika_tema_get_sitemap_url(home_url('/'), '1.0', 'daily');
+    // Dodaj hreflang oznake za druge jezike ako postoje
+    $languages = array(
+        'en' => 'en_US',
+        'de' => 'de_DE',
+        'it' => 'it_IT'
+    );
     
-    // Dodaj stranice
-    $pages = get_pages();
-    foreach ($pages as $page) {
-        $sitemap_content .= matematika_tema_get_sitemap_url(get_permalink($page->ID), '0.8', 'weekly');
-    }
-    
-    // Dodaj postove
-    $posts = get_posts(array('posts_per_page' => -1));
-    foreach ($posts as $post) {
-        $sitemap_content .= matematika_tema_get_sitemap_url(get_permalink($post->ID), '0.6', 'monthly');
-    }
-    
-    // Dodaj custom post types
-    $custom_types = array('geometric_shapes_game');
-    foreach ($custom_types as $type) {
-        $custom_posts = get_posts(array('post_type' => $type, 'posts_per_page' => -1));
-        foreach ($custom_posts as $post) {
-            $sitemap_content .= matematika_tema_get_sitemap_url(get_permalink($post->ID), '0.6', 'weekly');
+    foreach ($languages as $lang_code => $locale) {
+        $translated_url = apply_filters('wpml_permalink', get_permalink(), $lang_code);
+        if ($translated_url) {
+            echo '<link rel="alternate" href="' . esc_url($translated_url) . '" hreflang="' . esc_attr($lang_code) . '">';
+            echo '<meta property="og:locale:alternate" content="' . esc_attr($locale) . '">';
         }
     }
-    
-    $sitemap_content .= '</urlset>';
-    
-    // Spremi sitemap.xml
-    $sitemap_path = get_template_directory() . '/sitemap.xml';
-    file_put_contents($sitemap_path, $sitemap_content);
 }
+add_action('wp_head', 'matematika_tema_add_localization_meta');
 
-// Helper funkcija za generiranje URL unosa u sitemap
-function matematika_tema_get_sitemap_url($url, $priority, $changefreq) {
-    return "\t<url>\n" .
-           "\t\t<loc>" . esc_url($url) . "</loc>\n" .
-           "\t\t<lastmod>" . date('c') . "</lastmod>\n" .
-           "\t\t<changefreq>" . esc_html($changefreq) . "</changefreq>\n" .
-           "\t\t<priority>" . esc_html($priority) . "</priority>\n" .
-           "\t</url>\n";
-}
-
-// Generiraj sitemap kada se spremi post ili stranica
-function matematika_tema_update_sitemap($post_id) {
-    if (wp_is_post_revision($post_id)) {
-        return;
+// Automatsko generiranje meta opisa na hrvatskom
+function matematika_tema_generate_meta_description($post) {
+    $description = '';
+    
+    if (is_page_template('page-templates/template-grade.php')) {
+        $grade = get_post_meta($post->ID, 'razred', true);
+        $description = sprintf(
+            'Matematika za %s. razred osnovne škole. Besplatne lekcije, zadaci i vježbe iz matematike.',
+            $grade
+        );
+    } elseif (is_page_template(array(
+        'page-templates/game-geometric-shapes.php',
+        'page-templates/matematicka-igra.php',
+        'page-templates/matematicki-zadaci.php'
+    ))) {
+        $description = 'Zabavna matematička igra za učenje i vježbanje matematike. Interaktivni zadaci prilagođeni učenicima osnovne škole.';
+    } else {
+        // Za ostale stranice koristi excerpt ili generiraj iz sadržaja
+        $description = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 20);
     }
-    matematika_tema_generate_sitemap();
+    
+    return $description;
 }
-add_action('save_post', 'matematika_tema_update_sitemap');
 
-// Generiraj sitemap pri aktivaciji teme
-function matematika_tema_activate() {
-    matematika_tema_generate_sitemap();
+// Dodaj regionalne meta podatke
+function matematika_tema_add_regional_meta() {
+    echo '<meta name="geo.region" content="HR" />';
+    echo '<meta name="geo.placename" content="Hrvatska" />';
+    echo '<meta name="geo.position" content="45.815399;15.966568" />'; // Zagreb koordinate
+    echo '<meta name="ICBM" content="45.815399, 15.966568" />';
 }
-add_action('after_switch_theme', 'matematika_tema_activate');
+add_action('wp_head', 'matematika_tema_add_regional_meta');
